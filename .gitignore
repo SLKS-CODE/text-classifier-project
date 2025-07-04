@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.h5
+*.pkl
+.env
+.DS_Store
+node_modules/
+# .gitignore
+*.h5
+*.pkl
+*.csv
+__pycache__/
+*.pyc
