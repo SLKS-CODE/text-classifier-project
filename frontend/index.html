@@ -1,0 +1,64 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentiment Classifier</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 30px;
+      text-align: center;
+    }
+    textarea {
+      width: 60%;
+      height: 100px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Sentiment Classifier (USE)</h1>
+  <textarea id="textInput" placeholder="Type your sentence here..."></textarea><br>
+  <button onclick="predict()">Predict</button>
+  <div id="result"></div>
+
+  <script>
+    async function predict() {
+      const text = document.getElementById("textInput").value;
+      if (!text) {
+        alert("Please enter a sentence.");
+        return;
+      }
+
+      const response = await fetch("http://127.0.0.1:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: text })
+      });
+
+      const data = await response.json();
+      document.getElementById("result").innerHTML = `
+        <strong>Input:</strong> ${data.input}<br/>
+        <strong>Predicted Label:</strong> ${data.predicted_label}<br/>
+        <strong>Confidence:</strong> ${data.confidence}
+      `;
+    }
+  </script>
+</body>
+</html>
